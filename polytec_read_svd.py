@@ -10,6 +10,21 @@ class ClassData:
     pass
 
 
+from json import JSONEncoder
+
+class NumpyArrayEncoder(JSONEncoder):
+    FORMAT_SPEC = '@@{}@@'
+
+    def default(self, obj):
+        if isinstance(obj, np.ndarray):
+            return obj.tolist()
+        
+#         if isinstance(obj, np.ndarray):
+#             return self.FORMAT_SPEC.format(id(obj))
+# #             return obj.tolist()
+#         return JSONEncoder.default(self, obj)
+
+
 def GetPointData(filename, domainname, channelname, signalname, displayname, point, frame):
     """
     % [x,y,usd] = GetPointData(filename, domainname, channelname, signalname, displayname,
@@ -196,6 +211,13 @@ def CreateDataDict(filename, domainname, vib_channelname, vib_signalname, ref_ch
     return data
 
 
+
+def save_dict2json(data, out_filename):
+
+    
+    with open(out_filename, "w") as outfile:
+        json.dump(data, outfile,  cls=NumpyArrayEncoder, indent=4)
+        
 
 
 if __name__ == "__main__":
