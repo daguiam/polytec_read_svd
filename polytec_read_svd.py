@@ -193,6 +193,9 @@ def CreateDataDict(filename, domainname, vib_channelname, vib_signalname, ref_ch
     data["displayname"] = ref_signalname
     data["nr_points"] = nr_points
 
+
+    a =1
+
     for i in range(nr_points):
         data[i] = dict()
         data[i]['x'] = XYZ[i][0]
